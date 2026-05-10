@@ -9,71 +9,100 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
     <link rel="icon" href="https://img.icons8.com/ios-filled/150/c5a059/cross.png">
-    <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/150/c5a059/cross.png">
 
     <style>
-        :root { --primary: #1877f2; --gold: #c5a059; --dark: #121212; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f0f2f5; text-align: center; }
+        :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
         
-        /* Header */
-        nav { background: white; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        nav h2 { color: var(--primary); margin: 0; font-size: 1.2rem; }
+        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        nav .brand { color: var(--primary); font-weight: bold; font-size: 1.2rem; line-height: 1.2; }
+        nav .links { text-align: right; color: #666; font-size: 0.9rem; }
 
-        /* Hero Section */
-        .hero { background: var(--dark); color: white; padding: 40px 20px; }
-        .logo-circle { 
-            width: 120px; height: 120px; border-radius: 50%; 
-            background: white; margin: 0 auto 20px; 
-            display: flex; align-items: center; justify-content: center;
-            border: 4px solid var(--gold);
-        }
-        .logo-circle img { width: 70px; }
-        .hero h1 { margin: 10px 0; font-size: 1.8rem; }
-        .hero p { color: #ccc; font-style: italic; }
+        .hero { background: var(--dark); color: white; padding: 50px 20px; text-align: center; }
+        .profile-container { width: 150px; height: 150px; margin: 0 auto 20px; }
+        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 4px solid white; background: white; padding: 10px; box-sizing: border-box; }
+        .hero h1 { font-size: 2.2rem; margin: 10px 0; }
+        .hero p { font-style: italic; color: #aaa; }
 
-        /* Radio Card */
-        .card { background: #222; margin: -30px 20px 20px; padding: 20px; border-radius: 15px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .radio-info { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; text-align: left; }
-        .dot { width: 10px; height: 10px; background: #ff4b2b; border-radius: 50%; animation: pulse 1.5s infinite; }
-        audio { width: 100%; height: 40px; filter: invert(100%); }
+        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 25px; margin-bottom: 30px; text-align: center; }
+        .blue-bar h2 { margin: 5px 0 0; font-size: 1.5rem; }
 
-        /* Verse Section */
-        .verse-box { background: white; margin: 20px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .verse-text { font-size: 1.2rem; color: #333; margin-bottom: 15px; line-height: 1.5; min-height: 80px; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 40px; text-align: center; }
+        .stat-item h3 { color: var(--primary); margin: 0; font-size: 1.4rem; }
+        .stat-item p { font-size: 0.65rem; color: #666; text-transform: uppercase; margin: 5px 0; font-weight: bold; }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; margin-bottom: 40px; }
+        .focus-card { background: #e3f2fd; padding: 20px; border-radius: 12px; font-weight: bold; color: #455a64; }
+
+        .devotional-card { background: white; margin: 20px; padding: 30px; border-radius: 15px; border-left: 5px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        .btn-row { display: flex; gap: 10px; padding: 0 20px; margin-top: 20px; }
+        .btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; color: white; cursor: pointer; }
+        .btn-blue { background: var(--primary); }
+        .btn-green { background: #4caf50; }
+
+        .form-card { background: white; margin: 20px; padding: 30px; border-radius: 15px; text-align: center; }
+        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 20px 0; box-sizing: border-box; }
+        
+        footer { padding: 40px 20px; color: #888; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <nav><h2>Faith Evangelical Ministry</h2></nav>
+    <nav>
+        <div class="brand">Faith Evangelical<br>Ministry</div>
+        <div class="links">Home<br>Prayer</div>
+    </nav>
 
     <div class="hero">
-        <div class="logo-circle">
-            <img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" alt="Cross Logo">
+        <div class="profile-container">
+            <img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" class="profile-pic" alt="Ministry Logo">
         </div>
         <h1>Promise Miracle</h1>
         <p>"Preach the Word - Reach the World"</p>
     </div>
 
-    <div class="card">
-        <div class="radio-info">
-            <div class="dot"></div>
-            <div>
-                <div style="font-size: 0.8rem; color: #888;">LIVE RADIO</div>
-                <div style="font-weight: bold;">Faith FM Streaming</div>
-            </div>
-        </div>
-        <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv"></audio>
+    <div class="blue-bar">
+        <h2>Walking in Divine Purpose</h2>
     </div>
 
-    <div class="verse-box">
-        <div id="verse" class="verse-text">"For God so loved the world..."</div>
-        <button onclick="newVerse()">Get New Verse</button>
+    <div class="stats-grid">
+        <div class="stat-item"><h3>50+</h3><p>Prayer Partners</p></div>
+        <div class="stat-item"><h3>Daily</h3><p>Devotionals</p></div>
+        <div class="stat-item"><h3>24/7</h3><p>Intercession</p></div>
     </div>
+
+    <div class="focus-grid">
+        <div class="focus-card">🙏 Global Missions</div>
+        <div class="focus-card">🔥 Youth Revival</div>
+        <div class="focus-card">🏥 Healing & Grace</div>
+        <div class="focus-card">📖 Word Depth</div>
+    </div>
+
+    <div class="devotional-card">
+        <h2 style="margin: 0 0 10px;">Walking by Faith, Not by Sight</h2>
+        <p>God asks us to trust the Guide, even when the path is foggy.</p>
+    </div>
+
+    <div style="padding: 0 20px; text-align:center;">
+        <h2>Daily Inspiration</h2>
+        <p id="verse" style="font-style: italic; color: #555; min-height:60px;">"For I know the plans I have for you," declares the Lord. - Jer 29:11</p>
+        <div class="btn-row">
+            <button class="btn btn-blue" onclick="newVerse()">New Verse</button>
+            <button class="btn btn-green">Share to WhatsApp</button>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <h2>Prayer Request</h2>
+        <textarea placeholder="Type your prayer request here..." rows="4"></textarea>
+        <button class="btn btn-blue" style="width: 100%;">Submit Request</button>
+    </div>
+
+    <footer>
+        © 2026 Promise Miracle | Faith Evangelical Ministry
+    </footer>
 
     <script>
         const verses = [
@@ -81,7 +110,32 @@
             "The Lord is my shepherd; I shall not want. - Psalm 23:1",
             "For I know the plans I have for you, declares the Lord. - Jer 29:11",
             "Faith is the substance of things hoped for. - Heb 11:1",
-            "Fear not, for I am with you. - Isaiah 41:10"
+            "Be strong and courageous. Do not be afraid. - Joshua 1:9",
+            "Trust in the Lord with all your heart. - Prov 3:5",
+            "With God all things are possible. - Matt 19:26",
+            "The Lord is my light and my salvation. - Psalm 27:1",
+            "For God so loved the world that He gave His only Son. - John 3:16",
+            "The joy of the Lord is your strength. - Neh 8:10",
+            "Cast all your anxiety on Him because He cares for you. - 1 Pet 5:7",
+            "But they that wait upon the Lord shall renew their strength. - Isa 40:31",
+            "The name of the Lord is a strong tower. - Prov 18:10",
+            "Peace I leave with you; my peace I give you. - John 14:27",
+            "I am the way, the truth, and the life. - John 14:6",
+            "The Lord will fight for you; you need only to be still. - Exo 14:14",
+            "Thy word is a lamp unto my feet. - Psalm 119:105",
+            "Everything is possible for one who believes. - Mark 9:23",
+            "Greater is He that is in you. - 1 John 4:4",
+            "Ask and it will be given to you. - Matt 7:7",
+            "He restores my soul. - Psalm 23:3",
+            "God is our refuge and strength. - Psalm 46:1",
+            "The Lord is faithful to all His promises. - Psalm 145:13",
+            "Love the Lord your God with all your heart. - Matt 22:37",
+            "In everything give thanks. - 1 Thess 5:18",
+            "The truth will set you free. - John 8:32",
+            "I am with you always, to the very end of the age. - Matt 28:20",
+            "No weapon formed against you shall prosper. - Isa 54:17",
+            "My grace is sufficient for you. - 2 Cor 12:9",
+            "Let everything that has breath praise the Lord. - Psalm 150:6"
         ];
 
         function newVerse() {
@@ -93,7 +147,5 @@
             navigator.serviceWorker.register('sw.js');
         }
     </script>
-
 </body>
 </html>
-
