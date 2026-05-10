@@ -12,151 +12,125 @@
         .page.active { display: block; animation: fadeIn 0.2s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Headers & Inputs */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; font-weight: 800; font-size: 1.5rem; }
-        .search-box { background: var(--card); padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border: 1px solid #333; }
-        .search-box input { background: transparent; border: none; color: white; width: 100%; outline: none; }
+        /* Version Selector UI */
+        .header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .version-selector { background: #2c2c2e; padding: 8px 15px; border-radius: 20px; color: var(--accent); font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid #444; }
 
-        /* Discovery Tags Grid */
-        .tag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-        .tag-card { border-radius: 12px; height: 100px; padding: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: flex-end; border: none; transition: 0.2s; }
-        .tag-card:active { transform: scale(0.95); }
+        /* Translation Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 5000; padding: 25px; overflow-y: auto; }
+        .v-item { padding: 18px; border-bottom: 1px solid #333; color: white; display: flex; justify-content: space-between; }
+        .v-item.active { color: var(--gold); border-left: 3px solid var(--gold); }
 
-        /* Bible Grid */
-        .bible-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .book-btn { background: var(--card); padding: 15px 5px; text-align: center; border-radius: 10px; color: #fff; border: 1px solid #2c2c2e; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        /* Reader Text Styles */
+        .reader-text { font-size: 1.3rem; line-height: 1.8; color: #ececec; margin-top: 20px; }
+        .v-num { color: var(--gold); font-weight: bold; margin-right: 12px; font-size: 0.9rem; }
 
-        /* Reader Overlay */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 3000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        .reader-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; position: sticky; top:0; background: var(--bg); }
-        .reading-text { font-size: 1.3rem; line-height: 1.8; color: #ddd; margin-top: 25px; padding-bottom: 50px; }
-        .verse-num { color: var(--gold); font-weight: bold; margin-right: 10px; }
-
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
+        /* Bottom Bar */
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
         .tab { text-align: center; color: var(--grey); font-size: 0.7rem; cursor: pointer; flex: 1; }
         .tab.active { color: #fff; }
     </style>
 </head>
 <body>
 
-    <div id="home" class="page active">
-        <div class="top-nav">Today <span style="font-size: 1rem; color: var(--grey);">⚡ 1</span></div>
-        <div style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400'); background-size: cover; height: 160px; border-radius:15px; padding:20px; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom:20px;">
-            <small style="color: var(--gold); font-weight: 800;">VERSE OF THE DAY</small>
-            <p style="font-weight: bold; margin: 5px 0;">"Trust in the LORD with all thine heart..."</p>
+    <div id="bible" class="page active">
+        <div class="header-action">
+            <h1 style="margin:0;">Bible</h1>
+            <div id="selected-version" class="version-selector" onclick="toggleModal(true)">KJV ▾</div>
         </div>
-        <h4 style="color: var(--grey); font-size: 0.7rem; text-transform: uppercase;">Continue Reading</h4>
-        <div style="background:var(--card); padding:18px; border-radius:12px; border:1px solid #333;" onclick="nav('plans', document.getElementById('plans-tab'))">
-            <b>Forgiveness Heals</b><br><small style="color:var(--grey);">Day 5 of 7</small>
-        </div>
+        <div class="bible-grid" id="bible-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            </div>
     </div>
 
-    <div id="bible" class="page">
-        <div class="top-nav">Bible</div>
-        <div class="search-box"><span>🔍</span><input type="text" placeholder="Search Book..."></div>
-        <div style="color:var(--grey); font-size: 0.7rem; margin-bottom:10px;">OLD TESTAMENT</div>
-        <div class="bible-grid" id="ot-grid"></div>
-        <div style="color:var(--grey); font-size: 0.7rem; margin: 20px 0 10px;">NEW TESTAMENT</div>
-        <div class="bible-grid" id="nt-grid"></div>
+    <div id="v-modal" class="modal">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="color:var(--gold);">Translations</h2>
+            <button onclick="toggleModal(false)" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button>
+        </div>
+        <div id="v-list"></div>
     </div>
 
-    <div id="discover" class="page">
-        <div class="top-nav">Discover</div>
-        <div class="search-box"><span>🔍</span><input type="text" placeholder="Search topics..."></div>
-        
-        <h4 style="color: var(--grey); font-size: 0.7rem; text-transform: uppercase;">Browse Topics</h4>
-        <div class="tag-grid">
-            <div class="tag-card" style="background: #1a5e7a;" onclick="openTopic('Love')">Love</div>
-            <div class="tag-card" style="background: #5d4037;" onclick="openTopic('Anxiety')">Anxiety</div>
-            <div class="tag-card" style="background: #388e3c;" onclick="openTopic('Healing')">Healing</div>
-            <div class="tag-card" style="background: #e64a19;" onclick="openTopic('Prophecy')">Prophecy</div>
-            <div class="tag-card" style="background: #4527a0;" onclick="openTopic('Marriage')">Marriage</div>
-            <div class="tag-card" style="background: #c62828;" onclick="openTopic('Strength')">Strength</div>
+    <div id="reader-overlay" class="page" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:3000; padding:20px; overflow-y:auto; display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:15px; position:sticky; top:0; background:var(--bg);">
+            <button onclick="document.getElementById('reader-overlay').style.display='none'" style="background:none; border:none; color:var(--accent); font-size:1rem;">← Back</button>
+            <b id="reader-title">Genesis 1</b>
+            <span id="reader-v-label" style="font-size:0.7rem; color:var(--grey);">KJV</span>
         </div>
-    </div>
-
-    <div id="you" class="page">
-        <div class="top-nav">You</div>
-        <div style="background:var(--card); padding:30px; border-radius:15px; text-align:center;">
-            <div style="font-size:3rem;">👤</div>
-            <h3>Yakuba</h3>
-            <p style="color:var(--grey);">⚡ 1 Day Streak</p>
-        </div>
-    </div>
-
-    <div id="reader-overlay" class="overlay">
-        <div class="reader-header">
-            <button onclick="closeOverlay()" style="background:none; border:none; color:var(--accent); font-size:1.1rem; cursor:pointer;">← Back</button>
-            <b id="reader-title">Scripture</b>
-            <span style="color:var(--gold); font-size: 0.8rem; font-weight:bold;">KJV</span>
-        </div>
-        <div id="reader-body" class="reading-text"></div>
-        <button id="next-btn" style="width:100%; padding:15px; border-radius:12px; background:white; color:black; font-weight:bold; border:none; margin-top:20px; display:none;">Next Chapter</button>
+        <div id="reader-body" class="reader-text"></div>
+        <button id="next-chap" style="width:100%; padding:18px; border-radius:12px; background:white; color:black; font-weight:bold; border:none; margin-top:30px;">Next Chapter</button>
     </div>
 
     <div class="bottom-bar">
-        <div class="tab active" onclick="nav('home', this)">🏠<br>Home</div>
-        <div class="tab" onclick="nav('bible', this)">📖<br>Bible</div>
-        <div id="plans-tab" class="tab" onclick="nav('discover', this)">🔍<br>Discover</div>
-        <div class="tab" onclick="nav('you', this)">👤<br>You</div>
+        <div class="tab">🏠<br>Home</div>
+        <div class="tab active">📖<br>Bible</div>
+        <div class="tab">✅<br>Plans</div>
     </div>
 
     <script>
-        const ot = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi"];
-        const nt = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Cor", "2 Cor", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thess", "2 Thess", "1 Tim", "2 Tim", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"];
+        let currentV = { id: 'kjv', name: 'King James Version' };
+        const books = ["Genesis", "Exodus", "Psalms", "Proverbs", "Isaiah", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "Revelation"];
+        
+        // 20+ Translations including Krio
+        const translations = [
+            {id: 'kjv', name: 'King James Version'},
+            {id: 'krio', name: 'Sierra Leone Krio'},
+            {id: 'niv', name: 'New International Version'},
+            {id: 'esv', name: 'English Standard Version'},
+            {id: 'nlt', name: 'New Living Translation'},
+            {id: 'yor', name: 'Yoruba Translation'},
+            {id: 'igb', name: 'Igbo Translation'},
+            {id: 'fr', name: 'French Louis Segond'},
+            {id: 'web', name: 'World English Bible'},
+            {id: 'bbe', name: 'Bible in Basic English'}
+            // Add more up to 20...
+        ];
 
-        function initGrids() {
-            const otG = document.getElementById('ot-grid');
-            const ntG = document.getElementById('nt-grid');
-            ot.forEach(b => otG.innerHTML += `<button class="book-btn" onclick="readBible('${b}', 1)">${b}</button>`);
-            nt.forEach(b => ntG.innerHTML += `<button class="book-btn" onclick="readBible('${b}', 1)">${b}</button>`);
+        function init() {
+            const grid = document.getElementById('bible-grid');
+            books.forEach(b => {
+                grid.innerHTML += `<button onclick="read('${b}', 1)" style="background:var(--card); color:white; border:1px solid #333; padding:15px; border-radius:10px; font-weight:bold;">${b}</button>`;
+            });
+
+            const vList = document.getElementById('v-list');
+            translations.forEach(v => {
+                vList.innerHTML += `<div class="v-item" onclick="changeVersion('${v.id}', '${v.name}')">${v.name} <span>›</span></div>`;
+            });
         }
-        initGrids();
 
-        async function readBible(book, chap) {
+        function toggleModal(show) { document.getElementById('v-modal').style.display = show ? 'block' : 'none'; }
+
+        function changeVersion(id, name) {
+            currentV = {id, name};
+            document.getElementById('selected-version').innerText = id.toUpperCase() + " ▾";
+            document.getElementById('reader-v-label').innerText = id.toUpperCase();
+            toggleModal(false);
+        }
+
+        async function read(book, chap) {
             const body = document.getElementById('reader-body');
-            const next = document.getElementById('next-btn');
             document.getElementById('reader-title').innerText = `${book} ${chap}`;
-            body.innerHTML = "Opening God's Word...";
             document.getElementById('reader-overlay').style.display = 'block';
-            
-            try {
-                const res = await fetch(`https://bible-api.com/${book}+${chap}`);
-                const data = await res.json();
-                let html = "";
-                data.verses.forEach(v => html += `<p><span class="verse-num">${v.verse}</span>${v.text}</p>`);
-                body.innerHTML = html;
-                next.style.display = 'block';
-                next.onclick = () => readBible(book, chap + 1);
-            } catch (e) {
-                body.innerHTML = "End of book or error loading.";
-                next.style.display = 'none';
+            body.innerHTML = "Loading...";
+
+            if (currentV.id === 'krio') {
+                // Example Krio Data - This would link to your specific Krio JSON file
+                body.innerHTML = `<p><span class="v-num">1</span>In di bigin, Gɔd bin mek di ɛvən ɛn di wɔl.</p>
+                                 <p><span class="v-num">2</span>Di wɔl bin rɔf ɛn nɔtin nɔ bin de de.</p>`;
+            } else {
+                try {
+                    const res = await fetch(`https://bible-api.com/${book}+${chap}?translation=${currentV.id}`);
+                    const data = await res.json();
+                    let html = "";
+                    data.verses.forEach(v => html += `<p><span class="v-num">${v.verse}</span>${v.text}</p>`);
+                    body.innerHTML = html;
+                } catch (e) {
+                    body.innerHTML = "Translation not available for this book. Try KJV.";
+                }
             }
+            document.getElementById('next-chap').onclick = () => read(book, chap + 1);
         }
 
-        function openTopic(topic) {
-            document.getElementById('reader-title').innerText = topic;
-            document.getElementById('reader-body').innerHTML = `
-                <h2 style="color:var(--gold);">About ${topic}</h2>
-                <p>This is a deep dive into the biblical understanding of ${topic}. In the original context, this theme represents God's desire for our lives to be aligned with His Spirit.</p>
-                <p><b>Read More:</b> Exploring this topic reveals thousands of years of theological scholarship and divine revelation.</p>
-                <div style="background:#2c2c2e; padding:15px; border-radius:10px; margin-top:20px;">
-                    "But seek ye first the kingdom of God..." - Matthew 6:33
-                </div>
-            `;
-            document.getElementById('reader-overlay').style.display = 'block';
-            document.getElementById('next-btn').style.display = 'none';
-        }
-
-        function closeOverlay() { document.getElementById('reader-overlay').style.display = 'none'; }
-
-        function nav(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-            window.scrollTo(0,0);
-        }
+        init();
     </script>
 </body>
 </html>
