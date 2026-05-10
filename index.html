@@ -12,125 +12,136 @@
         .page.active { display: block; animation: fadeIn 0.2s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Version Selector UI */
-        .header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .version-selector { background: #2c2c2e; padding: 8px 15px; border-radius: 20px; color: var(--accent); font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid #444; }
+        /* UI Components */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; font-weight: 800; font-size: 1.5rem; }
+        .search-box { background: var(--card); padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border: 1px solid #333; }
+        .search-box input { background: transparent; border: none; color: white; width: 100%; outline: none; }
 
-        /* Translation Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 5000; padding: 25px; overflow-y: auto; }
-        .v-item { padding: 18px; border-bottom: 1px solid #333; color: white; display: flex; justify-content: space-between; }
-        .v-item.active { color: var(--gold); border-left: 3px solid var(--gold); }
+        /* Discovery & Tags */
+        .tag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .tag-card { border-radius: 12px; height: 110px; padding: 15px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; border: none; }
 
-        /* Reader Text Styles */
-        .reader-text { font-size: 1.3rem; line-height: 1.8; color: #ececec; margin-top: 20px; }
-        .v-num { color: var(--gold); font-weight: bold; margin-right: 12px; font-size: 0.9rem; }
+        /* Bible Grid */
+        .bible-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .book-btn { background: var(--card); padding: 15px 5px; text-align: center; border-radius: 10px; color: #fff; border: 1px solid #2c2c2e; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 
-        /* Bottom Bar */
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
+        /* Reader Overlay */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 3000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .reader-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; position: sticky; top:0; background: var(--bg); }
+        .reading-text { font-size: 1.25rem; line-height: 1.8; color: #ddd; margin-top: 25px; }
+        .verse-num { color: var(--gold); font-weight: bold; margin-right: 10px; }
+        
+        /* Interactive Verse Link */
+        .verse-link { color: var(--accent); font-weight: bold; text-decoration: underline; cursor: pointer; }
+
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
         .tab { text-align: center; color: var(--grey); font-size: 0.7rem; cursor: pointer; flex: 1; }
         .tab.active { color: #fff; }
     </style>
 </head>
 <body>
 
-    <div id="bible" class="page active">
-        <div class="header-action">
-            <h1 style="margin:0;">Bible</h1>
-            <div id="selected-version" class="version-selector" onclick="toggleModal(true)">KJV ▾</div>
+    <div id="home" class="page active">
+        <div class="top-nav">Daily Inspiration</div>
+        <div style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1490730141103-6ac277a59f48?w=500'); background-size: cover; border-radius: 15px; padding: 25px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+            <p id="daily-quote" style="font-size: 1.2rem; font-style: italic; margin-bottom: 15px;">"For God so loved the world..."</p>
+            <button class="verse-link" onclick="readBible('John', 3)" style="background:none; border:none; font-size:1rem;">Read John 3 ›</button>
         </div>
-        <div class="bible-grid" id="bible-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-            </div>
+        <h4 style="margin: 30px 0 10px; color: var(--grey); font-size: 0.7rem; text-transform: uppercase;">Discover Topics</h4>
+        <div class="tag-grid">
+            <div class="tag-card" style="background: #1a5e7a;" onclick="openTopic('Love', '1 Corinthians', 13)">Love</div>
+            <div class="tag-card" style="background: #5d4037;" onclick="openTopic('Healing', 'Psalm', 103)">Healing</div>
+        </div>
     </div>
 
-    <div id="v-modal" class="modal">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 style="color:var(--gold);">Translations</h2>
-            <button onclick="toggleModal(false)" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button>
+    <div id="bible" class="page">
+        <div class="top-nav">Bible</div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="Search Book..."></div>
+        <div id="bible-list">
+            <div class="bible-grid" id="ot-grid"></div>
+            <div style="margin: 20px 0;"></div>
+            <div class="bible-grid" id="nt-grid"></div>
         </div>
-        <div id="v-list"></div>
     </div>
 
-    <div id="reader-overlay" class="page" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:3000; padding:20px; overflow-y:auto; display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:15px; position:sticky; top:0; background:var(--bg);">
-            <button onclick="document.getElementById('reader-overlay').style.display='none'" style="background:none; border:none; color:var(--accent); font-size:1rem;">← Back</button>
-            <b id="reader-title">Genesis 1</b>
-            <span id="reader-v-label" style="font-size:0.7rem; color:var(--grey);">KJV</span>
+    <div id="discover" class="page">
+        <div class="top-nav">Plans</div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="Search thousands of plans..."></div>
+        <div class="tag-grid">
+            <div class="tag-card" style="background: #388e3c;" onclick="openTopic('Faith', 'Hebrews', 11)">Faith</div>
+            <div class="tag-card" style="background: #e64a19;" onclick="openTopic('Wisdom', 'Proverbs', 1)">Wisdom</div>
         </div>
-        <div id="reader-body" class="reader-text"></div>
-        <button id="next-chap" style="width:100%; padding:18px; border-radius:12px; background:white; color:black; font-weight:bold; border:none; margin-top:30px;">Next Chapter</button>
+    </div>
+
+    <div id="reader-overlay" class="overlay">
+        <div class="reader-header">
+            <button onclick="closeOverlay()" style="background:none; border:none; color:var(--accent); font-size:1rem; cursor:pointer;">← Back</button>
+            <b id="reader-title">Reading</b>
+            <span style="color:var(--gold); font-weight:bold; font-size:0.8rem;">KJV</span>
+        </div>
+        <div id="reader-body" class="reading-text"></div>
+        <button id="next-btn" style="width:100%; padding:15px; border-radius:12px; background:white; color:black; font-weight:bold; border:none; margin-top:20px; display:none;">Next Chapter</button>
     </div>
 
     <div class="bottom-bar">
-        <div class="tab">🏠<br>Home</div>
-        <div class="tab active">📖<br>Bible</div>
-        <div class="tab">✅<br>Plans</div>
+        <div class="tab active" onclick="nav('home', this)">🏠<br>Home</div>
+        <div id="bible-tab" class="tab" onclick="nav('bible', this)">📖<br>Bible</div>
+        <div class="tab" onclick="nav('discover', this)">✅<br>Plans</div>
     </div>
 
     <script>
-        let currentV = { id: 'kjv', name: 'King James Version' };
-        const books = ["Genesis", "Exodus", "Psalms", "Proverbs", "Isaiah", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "Revelation"];
-        
-        // 20+ Translations including Krio
-        const translations = [
-            {id: 'kjv', name: 'King James Version'},
-            {id: 'krio', name: 'Sierra Leone Krio'},
-            {id: 'niv', name: 'New International Version'},
-            {id: 'esv', name: 'English Standard Version'},
-            {id: 'nlt', name: 'New Living Translation'},
-            {id: 'yor', name: 'Yoruba Translation'},
-            {id: 'igb', name: 'Igbo Translation'},
-            {id: 'fr', name: 'French Louis Segond'},
-            {id: 'web', name: 'World English Bible'},
-            {id: 'bbe', name: 'Bible in Basic English'}
-            // Add more up to 20...
-        ];
+        const ot = ["Genesis", "Exodus", "Psalms", "Proverbs", "Isaiah"];
+        const nt = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "Hebrews", "Revelation"];
 
         function init() {
-            const grid = document.getElementById('bible-grid');
-            books.forEach(b => {
-                grid.innerHTML += `<button onclick="read('${b}', 1)" style="background:var(--card); color:white; border:1px solid #333; padding:15px; border-radius:10px; font-weight:bold;">${b}</button>`;
-            });
-
-            const vList = document.getElementById('v-list');
-            translations.forEach(v => {
-                vList.innerHTML += `<div class="v-item" onclick="changeVersion('${v.id}', '${v.name}')">${v.name} <span>›</span></div>`;
-            });
+            const otG = document.getElementById('ot-grid');
+            const ntG = document.getElementById('nt-grid');
+            ot.forEach(b => otG.innerHTML += `<button class="book-btn" onclick="readBible('${b}', 1)">${b}</button>`);
+            nt.forEach(b => ntG.innerHTML += `<button class="book-btn" onclick="readBible('${b}', 1)">${b}</button>`);
         }
-
-        function toggleModal(show) { document.getElementById('v-modal').style.display = show ? 'block' : 'none'; }
-
-        function changeVersion(id, name) {
-            currentV = {id, name};
-            document.getElementById('selected-version').innerText = id.toUpperCase() + " ▾";
-            document.getElementById('reader-v-label').innerText = id.toUpperCase();
-            toggleModal(false);
-        }
-
-        async function read(book, chap) {
-            const body = document.getElementById('reader-body');
-            document.getElementById('reader-title').innerText = `${book} ${chap}`;
-            document.getElementById('reader-overlay').style.display = 'block';
-            body.innerHTML = "Loading...";
-
-            if (currentV.id === 'krio') {
-                // Example Krio Data - This would link to your specific Krio JSON file
-                body.innerHTML = `<p><span class="v-num">1</span>In di bigin, Gɔd bin mek di ɛvən ɛn di wɔl.</p>
-                                 <p><span class="v-num">2</span>Di wɔl bin rɔf ɛn nɔtin nɔ bin de de.</p>`;
-            } else {
-                try {
-                    const res = await fetch(`https://bible-api.com/${book}+${chap}?translation=${currentV.id}`);
-                    const data = await res.json();
-                    let html = "";
-                    data.verses.forEach(v => html += `<p><span class="v-num">${v.verse}</span>${v.text}</p>`);
-                    body.innerHTML = html;
-                } catch (e) {
-                    body.innerHTML = "Translation not available for this book. Try KJV.";
-                }
-            }
-            document.getElementById('next-chap').onclick = () => read(book, chap + 1);
-        }
-
         init();
+
+        async function readBible(book, chap) {
+            nav('bible', document.getElementById('bible-tab')); // Switch tab visually
+            const body = document.getElementById('reader-body');
+            const next = document.getElementById('next-btn');
+            document.getElementById('reader-title').innerText = `${book} ${chap}`;
+            body.innerHTML = "Fetching Scripture...";
+            document.getElementById('reader-overlay').style.display = 'block';
+            
+            try {
+                const res = await fetch(`https://bible-api.com/${book}+${chap}`);
+                const data = await res.json();
+                let html = "";
+                data.verses.forEach(v => html += `<p><span class="verse-num">${v.verse}</span>${v.text}</p>`);
+                body.innerHTML = html;
+                next.style.display = 'block';
+                next.onclick = () => readBible(book, chap + 1);
+            } catch (e) {
+                body.innerHTML = "End of book or Error.";
+            }
+        }
+
+        function openTopic(topic, book, chap) {
+            document.getElementById('reader-title').innerText = topic;
+            document.getElementById('reader-body').innerHTML = `
+                <h2 style="color:var(--gold);">Topic: ${topic}</h2>
+                <p>Exploring ${topic} helps us understand God's heart. This theme is central to the Christian walk.</p>
+                <p><b>Study Verse:</b> <span class="verse-link" onclick="readBible('${book}', ${chap})">${book} ${chap} ›</span></p>
+                <p>Click the link above to read the full context in the Bible.</p>
+            `;
+            document.getElementById('reader-overlay').style.display = 'block';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function closeOverlay() { document.getElementById('reader-overlay').style.display = 'none'; }
+
+        function nav(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
     </script>
 </body>
 </html>
