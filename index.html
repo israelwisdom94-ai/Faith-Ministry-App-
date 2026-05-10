@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faith Evangelical Ministry</title>
+    
+    <link rel="apple-touch-icon" href="me.jpg">
+    <link rel="icon" href="me.jpg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <style>
+        :root { --primary: #1877f2; --dark: #0a0a0a; --light: #f0f2f5; --accent: #ff3b30; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: white; color: #1c1e21; text-align: center; }
+        
+        /* Nav & Hero */
+        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
+        .logo-text { color: var(--primary); font-weight: bold; font-size: 1.1rem; text-align: left; }
+        .hero { background: var(--dark); color: white; padding: 40px 20px; }
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 15px; }
+        
+        /* Live Radio Section */
+        .radio-card { background: #1a1a1a; color: white; margin: 15px; padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px; justify-content: center; }
+        .pulse { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; animation: blink 1.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        audio { height: 35px; width: 180px; filter: invert(100%); }
+
+        /* Content Layout */
+        .blue-bar { background: linear-gradient(to right, #0052d4, #1877f2); color: white; padding: 20px; font-weight: bold; }
+        .stats { display: flex; justify-content: space-around; padding: 15px; border-bottom: 1px solid #eee; }
+        .stat-item b { color: var(--primary); display: block; font-size: 1.2rem; }
+        .stat-item span { font-size: 0.65rem; color: #777; font-weight: bold; text-transform: uppercase; }
+
+        .container { padding: 20px 15px; max-width: 500px; margin: auto; text-align: left; }
+        .grid-focus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+        .focus-item { background: #eef4ff; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; border: 1px solid #dce8ff; }
+        
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 25px; border: 1px solid #eee; }
+        .reflection-box { background: #f0f2f5; border-left: 5px solid var(--primary); padding: 15px; font-style: italic; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        button { flex: 1; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-blue { background: var(--primary); color: white; }
+        .btn-green { background: #2ecc71; color: white; }
+        
+        textarea { width: 100%; height: 100px; padding: 12px; border: 1px solid #ddd; border-radius: 12px; box-sizing: border-box; margin-top: 10px; }
+        .footer { padding: 40px 20px; color: #888; font-size: 0.8rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav><div class="logo-text">Faith Evangelical<br>Ministry</div></nav>
+
+    <div class="hero">
+        <img src="me.jpg" class="profile-pic" alt="Promise Miracle">
+        <h1 style="margin:0;">Promise Miracle</h1>
+        <p style="opacity:0.8; margin: 10px 0;">"Preach the Word - Reach the World"</p>
+    </div>
+
+    <div class="radio-card">
+        <div class="pulse"></div>
+        <div style="text-align: left;">
+            <div style="font-size: 0.7rem; color: #aaa; font-weight: bold;">LIVE RADIO</div>
+            <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 5px;">Faith FM Streaming</div>
+        </div>
+        <audio controls src="https://stream.zeno.fm/f3t7z6m5v0hvv"></audio>
+    </div>
+
+    <div class="blue-bar"><div id="word-display">Walking in Divine Purpose</div></div>
+
+    <div class="stats">
+        <div class="stat-item"><b>50+</b><span>Partners</span></div>
+        <div class="stat-item"><b>Daily</b><span>Devotionals</span></div>
+        <div class="stat-item"><b>24/7</b><span>Intercession</span></div>
+    </div>
+
+    <div class="container">
+        <h2>Our Prayer Focus</h2>
+        <div class="grid-focus">
+            <div class="focus-item">🙏 Global Missions</div>
+            <div class="focus-item">🔥 Youth Revival</div>
+            <div class="focus-item">🏥 Healing & Grace</div>
+            <div class="focus-item">📖 Word Depth</div>
+        </div>
+
+        <div class="card">
+            <div style="color:var(--primary); font-weight:bold; font-size:0.8rem; margin-bottom:10px;">TODAY'S DEVOTIONAL</div>
+            <h3 style="margin:0 0 10px 0;">Walking by Faith</h3>
+            <p style="line-height:1.6; color:#444;">Trust the Guide even when you cannot see the path. He is already in your tomorrow.</p>
+        </div>
+
+        <div class="card">
+            <div class="reflection-box"><strong>Reflection:</strong> Are you trying to "see" instead of "trust" today?</div>
+            <h2>Daily Inspiration</h2>
+            <p id="bible-verse" style="font-size:1.1rem; font-style:italic;">"For I know the plans I have for you," declares the Lord. - Jeremiah 29:11</p>
+            <div class="btn-group">
+                <button class="btn-blue" onclick="getVerse()">New Verse</button>
+                <button class="btn-green" onclick="shareWA()">Share</button>
+            </div>
+        </div>
+
+        <div class="card" style="text-align:center;">
+            <h3>Prayer Request</h3>
+            <textarea id="p-text" placeholder="How can we pray for you?"></textarea>
+            <button class="btn-blue" style="width:100%; margin-top:15px;" onclick="sendP()">Submit Request</button>
+        </div>
+
+        <div class="footer">© 2026 Promise Miracle | Faith Evangelical Ministry</div>
+    </div>
+
+    <script>
+        const verses = [{t:"I can do all things through Christ.", r:"Phil 4:13"}, {t:"The Lord is my Shepherd.", r:"Ps 23:1"}, {t:"Trust in the Lord with all your heart.", r:"Prov 3:5"}];
+        function getVerse() {
+            const v = verses[Math.floor(Math.random() * verses.length)];
+            document.getElementById('bible-verse').innerText = '"' + v.t + '" - ' + v.r;
+            document.getElementById('word-display').innerText = v.t;
+        }
+        function shareWA() {
+            const text = document.getElementById('bible-verse').innerText;
+            window.open("https://wa.me/?text=" + encodeURIComponent(text));
+        }
+        function sendP() {
+            const val = document.getElementById('p-text').value;
+            if(val.trim() !== "") { alert("Request Received!"); document.getElementById('p-text').value = ""; }
+            else { alert("Please type your request."); }
+        }
+    </script>
+</body>
+</html>
