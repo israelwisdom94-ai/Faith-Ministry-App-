@@ -3,139 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faith Evangelical Ministry - Bible App</title>
+    <title>Faith Evangelical Ministry - Bible</title>
     <style>
-        :root { 
-            --bg: #121212; --card: #1c1c1e; --accent: #007aff; --text: #ffffff; --grey: #8e8e93; --gold: #c5a059;
-        }
-        body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); color: var(--text); padding-bottom: 70px; }
+        :root { --bg: #000; --card: #1c1c1e; --accent: #007aff; --text: #fff; --grey: #8e8e93; --gold: #c5a059; }
+        body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
         
-        /* Navigation & Tabs */
-        .page { display: none; padding: 20px; }
+        /* Navigation & Screens */
+        .page { display: none; padding: 20px; min-height: 100vh; padding-bottom: 100px; box-sizing: border-box; }
         .page.active { display: block; }
         
-        .top-nav { display: flex; justify-content: space-between; padding: 15px 20px; position: sticky; top: 0; background: var(--bg); z-index: 100; font-weight: 800; font-size: 1.2rem; }
+        /* Reader Overlay */
+        #reader-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg); z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto;
+        }
+        .reader-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #2c2c2e; margin-bottom: 20px; }
+
+        /* UI Elements */
+        .top-nav { display: flex; justify-content: space-between; padding: 15px 0; font-weight: 800; font-size: 1.5rem; }
+        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
         
-        /* Cards & UI */
-        .card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 15px; }
-        .btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        /* Bible Grid */
+        .bible-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .book-btn { background: #2c2c2e; padding: 15px 2px; text-align: center; border-radius: 8px; color: #fff; border: none; cursor: pointer; font-size: 0.75rem; }
         
-        /* Bible Tab Layout */
-        .bible-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .book-box { background: var(--card); padding: 15px; text-align: center; border-radius: 8px; font-size: 0.8rem; border: 1px solid #2c2c2e; }
+        /* Bottom Tab Bar */
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
+        .tab { text-align: center; color: var(--grey); font-size: 0.65rem; cursor: pointer; flex: 1; }
+        .tab.active { color: #fff; }
+        .tab-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
 
-        /* Plans Tab Layout */
-        .plan-item { display: flex; gap: 15px; align-items: center; background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; }
-        .plan-img { width: 60px; height: 60px; border-radius: 8px; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-
-        /* Bottom Nav */
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #2c2c2e; }
-        .nav-btn { text-align: center; color: var(--grey); font-size: 0.65rem; text-decoration: none; cursor: pointer; }
-        .nav-btn.active { color: white; }
-        .nav-btn i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-
-        /* Settings Style */
-        .setting-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #2c2c2e; font-size: 0.9rem; }
+        /* Row Items */
+        .row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #2c2c2e; }
+        .icon-box { width: 40px; height: 40px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
     <div id="home" class="page active">
         <div class="top-nav">Today</div>
-        <div class="card" style="text-align:center;">
-            <div style="width:60px; height:60px; background:white; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border:2px solid var(--gold);">
+        <div class="card" style="text-align: center;">
+            <div style="width: 60px; height: 60px; background: white; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--gold);">
                 <img src="https://img.icons8.com/ios-filled/50/c5a059/cross.png" width="30">
             </div>
             <h3>Promise Miracle</h3>
-            <p style="color:var(--grey); font-size:0.8rem;">"Preach the Word - Reach the World"</p>
+            <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv" style="width: 100%; filter: invert(1); margin-top: 10px;"></audio>
         </div>
-        
         <div class="card">
-            <small style="color:var(--grey); font-weight:bold;">LIVE STREAM</small>
-            <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv" style="width:100%; filter:invert(1); margin-top:10px;"></audio>
-        </div>
-
-        <div class="card">
-            <span style="color:var(--accent); font-size:0.7rem; font-weight:800;">DAILY DEVOTIONAL</span>
-            <h2>Walking by Faith</h2>
-            <p style="color:var(--grey);">Trust God today even when the path is foggy.</p>
+            <small style="color: var(--accent);">VERSE OF THE DAY</small>
+            <p id="daily-v" style="font-size: 1.2rem; font-weight: 600;">"Trust in the LORD with all thine heart..." - Prov 3:5</p>
         </div>
     </div>
 
     <div id="bible" class="page">
         <div class="top-nav">Bible</div>
-        <div class="bible-grid">
-            <div class="book-box">Genesis</div><div class="book-box">Exodus</div><div class="book-box">Leviticus</div>
-            <div class="book-box">Psalms</div><div class="book-box">Proverbs</div><div class="book-box">Isaiah</div>
-            <div class="book-box">Matthew</div><div class="book-box">Mark</div><div class="book-box">Luke</div>
-            <div class="book-box">John</div><div class="book-box">Acts</div><div class="book-box">Romans</div>
-        </div>
-        <button class="btn" style="margin-top:20px; background:#2c2c2e;">View All 66 Books</button>
+        <h4 style="color: var(--grey);">Old Testament</h4>
+        <div class="bible-grid" id="ot-grid"></div>
+        <h4 style="color: var(--grey); margin-top: 20px;">New Testament</h4>
+        <div class="bible-grid" id="nt-grid"></div>
     </div>
 
     <div id="plans" class="page">
-        <div class="top-nav">My Plans</div>
-        <div class="plan-item">
-            <div class="plan-img">📖</div>
-            <div><strong>Bible in a Year</strong><br><small style="color:var(--grey);">Day 12 of 365</small></div>
-        </div>
-        <div class="plan-item">
-            <div class="plan-img">🔥</div>
-            <div><strong>Youth Revival Plan</strong><br><small style="color:var(--grey);">5 Days Left</small></div>
-        </div>
-        <div class="plan-item">
-            <div class="plan-img">🛡️</div>
-            <div><strong>Faith Under Fire</strong><br><small style="color:var(--grey);">Start Plan</small></div>
+        <div class="top-nav">Plans</div>
+        <div class="card">
+            <div class="row"><div class="icon-box">📖</div><div><strong>Bible in a Year</strong><br><small>365 Days</small></div></div>
+            <div class="row"><div class="icon-box">🔥</div><div><strong>Youth Revival</strong><br><small>7 Days</small></div></div>
+            <div class="row"><div class="icon-box">🛡️</div><div><strong>Faith Over Fear</strong><br><small>14 Days</small></div></div>
         </div>
     </div>
 
     <div id="discover" class="page">
         <div class="top-nav">Discover</div>
-        <input type="text" placeholder="Search for verses, topics, or plans..." style="width:100%; padding:15px; border-radius:10px; border:none; background:var(--card); color:white; box-sizing:border-box;">
-        <h3 style="margin-top:20px;">Trending Topics</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:10px;">
-            <span style="background:var(--card); padding:8px 15px; border-radius:20px; font-size:0.8rem;">Peace</span>
-            <span style="background:var(--card); padding:8px 15px; border-radius:20px; font-size:0.8rem;">Healing</span>
-            <span style="background:var(--card); padding:8px 15px; border-radius:20px; font-size:0.8rem;">Anxiety</span>
-            <span style="background:var(--card); padding:8px 15px; border-radius:20px; font-size:0.8rem;">Forgiveness</span>
+        <input type="text" placeholder="Search verses or topics..." style="width:100%; padding:15px; border-radius:10px; border:none; background:var(--card); color:white; box-sizing:border-box;">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
+            <span class="book-btn" style="padding:10px 15px;">Peace</span>
+            <span class="book-btn" style="padding:10px 15px;">Healing</span>
+            <span class="book-btn" style="padding:10px 15px;">Joy</span>
         </div>
     </div>
 
     <div id="you" class="page">
         <div class="top-nav">You</div>
         <div class="card" style="text-align:center;">
-            <div style="width:70px; height:70px; background:var(--accent); border-radius:50%; margin:0 auto 10px; font-size:2rem; display:flex; align-items:center; justify-content:center;">👤</div>
-            <h3>Ministry Member</h3>
-            <p style="color:var(--grey); font-size:0.8rem;">Faith Evangelical Ministry</p>
+            <div style="font-size:3rem;">👤</div>
+            <h3>Faith Ministry Member</h3>
         </div>
-
         <div class="card">
-            <div class="setting-row"><span>Prayer Requests Sent</span><span>12</span></div>
-            <div class="setting-row"><span>Daily Streak</span><span>⚡ 5 Days</span></div>
-            <div class="setting-row"><span>Notification Settings</span><span>⚙️</span></div>
-            <div class="setting-row" style="color:#ff453a;"><span>Logout</span></div>
+            <div class="row"><span>Notifications</span><span style="margin-left:auto;">On</span></div>
+            <div class="row"><span>Ministry Info</span><span style="margin-left:auto;">ℹ️</span></div>
+            <div class="row"><span>Settings</span><span style="margin-left:auto;">⚙️</span></div>
+            <div class="row" style="color:red; border:none;"><span>Log Out</span></div>
         </div>
+    </div>
+
+    <div id="reader-overlay">
+        <div class="reader-header">
+            <button onclick="closeReader()" style="background:none; border:none; color:var(--accent); font-size:1.1rem;">← Back</button>
+            <h3 id="reader-title">Book</h3>
+            <span style="color:var(--grey);">KJV</span>
+        </div>
+        <div id="reader-content" style="font-size: 1.2rem; line-height: 1.7;"></div>
     </div>
 
     <div class="bottom-bar">
-        <div class="nav-btn active" onclick="showPage('home', this)"><i>🏠</i>Home</div>
-        <div class="nav-btn" onclick="showPage('bible', this)"><i>📖</i>Bible</div>
-        <div class="nav-btn" onclick="showPage('plans', this)"><i>✅</i>Plans</div>
-        <div class="nav-btn" onclick="showPage('discover', this)"><i>🔍</i>Discover</div>
-        <div class="nav-btn" onclick="showPage('you', this)"><i>👤</i>You</div>
+        <div class="tab active" onclick="nav('home', this)"><span class="tab-icon">🏠</span>Today</div>
+        <div class="tab" onclick="nav('bible', this)"><span class="tab-icon">📖</span>Bible</div>
+        <div class="tab" onclick="nav('plans', this)"><span class="tab-icon">✅</span>Plans</div>
+        <div class="tab" onclick="nav('discover', this)"><span class="tab-icon">🔍</span>Discover</div>
+        <div class="tab" onclick="nav('you', this)"><span class="tab-icon">👤</span>You</div>
     </div>
 
     <script>
-        function showPage(pageId, btn) {
-            // Hide all pages
+        // Data for all 66 books
+        const ot = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi"];
+        const nt = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"];
+
+        // Fill Bible grids
+        const fillGrid = (gridId, books) => {
+            const grid = document.getElementById(gridId);
+            books.forEach(book => {
+                const btn = document.createElement('button');
+                btn.className = 'book-btn';
+                btn.innerText = book;
+                btn.onclick = () => openReader(book);
+                grid.appendChild(btn);
+            });
+        };
+        fillGrid('ot-grid', ot);
+        fillGrid('nt-grid', nt);
+
+        function nav(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            // Update buttons
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            // Scroll to top
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
             window.scrollTo(0,0);
+        }
+
+        function openReader(book) {
+            document.getElementById('reader-title').innerText = book;
+            document.getElementById('reader-content').innerHTML = "Loading " + book + " text...<br><br>The Ministry is currently updating the full text for this book. Please check back shortly for the complete chapter-by-chapter reading experience.";
+            document.getElementById('reader-overlay').style.display = 'block';
+        }
+
+        function closeReader() {
+            document.getElementById('reader-overlay').style.display = 'none';
         }
     </script>
 </body>
