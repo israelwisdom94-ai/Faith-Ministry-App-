@@ -4,16 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faith Evangelical Ministry</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" href="https://img.icons8.com/ios-filled/150/c5a059/cross.png">
-
     <style>
         :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; scroll-behavior: smooth; }
         
-        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z
+        /* Nav */
+        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;}
+        nav .brand { color: var(--primary); font-weight: bold; text-decoration: none; }
+        nav .nav-links a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 15px; font-size: 0.9rem; }
 
+        /* Black Hero Section */
+        .hero { background: var(--dark); color: white; padding: 40px 20px 60px; text-align: center; }
+        .logo-circle { width: 100px; height: 100px; border-radius: 50%; background: white; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 4px solid var(--gold); }
+        .logo-circle img { width: 60px; }
+
+        /* Audio Card */
+        .audio-card { background: white; margin: -40px 20px 20px; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); text-align: center; position: relative; z-index: 10; }
+        audio { width: 100%; height: 35px; margin-top: 10px; }
+
+        /* Stats & Focus */
+        .stats { display: flex; justify-content: space-around; padding: 20px; background: white; text-align: center; }
+        .stat-item h3 { color: var(--primary); margin: 0; }
+        .stat-item p { font-size: 0.7rem; color: #888; margin: 5px 0 0; text-transform: uppercase; }
+        .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
+        .focus-card { background: #eff6ff; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px solid #dbeafe; }
+
+        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 25px; text-align: center; }
+
+        /* Devotional & Reflection */
+        .card { background: white; margin: 20px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .reflection { background: #f1f3f4; padding: 18px; border-radius: 12px; border-left: 5px solid #bdc1c6; margin: 0 20px 20px; font-size: 0.95rem; line-height: 1.5; }
+
+        /* Daily Inspiration Section */
+        .inspiration { text-align: center; padding: 20px 0; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 10px; padding: 0 20px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; }
+        .btn-v { background: #e3f2fd; color: var(--primary); }
+        .btn-s { background: #25D366; }
+
+        /* Prayer Request */
+        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 15px 0; box-sizing: border-box; font-size: 1rem; }
+
+        footer { padding: 40px; color: #888; font-size: 0.75rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="brand">FAITH EVANGELICAL MINISTRY</a>
+        <div class="nav-links"><a href="#">HOME</a><a href="#prayer">PRAYER</a></div>
+    </nav>
+
+    <div class="hero">
+        <div class="logo-circle"><img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" alt="logo"></div>
+        <h1>Promise Miracle</h1>
+        <p>"Preach the Word - Reach the World"</p>
+    </div>
+
+    <div class="audio-card">
+        <small style="color:#888; font-weight:bold; text-transform:uppercase;">Now Playing: Daily Scripture</small>
+        <div style="font-weight:bold; margin-top:5px;">Faith FM Streaming</div>
+        <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv"></audio>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item"><h3>50+</h3><p>Partners</p></div>
+        <div class="stat-item"><h3>Daily</h3><p>Devotionals</p></div>
+        <div class="stat-item"><h3>24/7</h3><p>Prayer</p></div>
+    </div>
+
+    <div class="focus-grid">
+        <div class="focus-card">🙏 Global Missions</div>
+        <div class="focus-card">🔥 Youth Revival</div>
+        <div class="focus-card">🏥 Healing & Grace</div>
+        <div class="focus-card">📖 Word Depth</div>
+    </div>
+
+    <div class="blue-bar">
+        <small style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Word of the Day</small>
+        <h2 style="margin: 10px 0;">Walking in Divine Purpose</h2>
+    </div>
+
+    <div class="card" style="border-left: 5px solid var(--primary);">
+        <span style="background:#e3f2fd; color:var(--primary); padding:4px 10px; border-radius:15px; font-size:0.7rem; font-weight:bold;">TODAY'S DEVOTIONAL</span>
+        <h2 style="margin: 15px 0 10px;">Walking by Faith, Not by Sight</h2>
+        <p>In our journey with God, there are seasons where the path ahead seems foggy. We want to see the destination, but God asks us to trust the Guide.</p>
+    </div>
+
+    <div class="reflection">
+        <strong>Reflection:</strong> What is one area today where you are trying to "see" instead of "trust"? Take a moment to surrender that worry to the Lord.
+    </div>
+
+    <div class="inspiration">
+        <h2 style="margin-bottom:5px;">Daily Inspiration</h2>
+        <p id="verse" style="font-style:italic; font-size:1.2rem; padding:15px 20px; color:#444;">"The Lord is my shepherd; I shall not want." - Psalm 23:1</p>
+        <div class="btn-group">
+            <button class="btn btn-v" onclick="newVerse()">New Verse</button>
+            <button class="btn btn-s" onclick="shareVerse()">Share to WhatsApp</button>
+        </div>
+    </div>
+
+    <div id="prayer" class="card" style="text-align:center;">
+        <h2 style="margin-top:0;">Prayer Request</h2>
+        <p style="color:#666;">How can we pray for you today?</p>
+        <textarea placeholder="Type your prayer request here..." rows="4"></textarea>
+        <button class="btn" onclick="alert('Your prayer request has been sent to the Ministry.')">Submit Request</button>
+    </div>
+
+    <footer>
+        © 2026 Promise Miracle | Faith Evangelical Ministry<br>
+        Designed with Excellence & Faith
+    </footer>
+
+    <script>
+        const verses = [
+            "I can do all things through Christ who strengthens me. - Phil 4:13",
+            "The Lord is my shepherd; I shall not want. - Psalm 23:1",
+            "For I know the plans I have for you. - Jer 29:11",
+            "Trust in the Lord with all your heart. - Prov 3:5",
+            "Thy word is a lamp unto my feet. - Psalm 119:105",
+            "Fear not, for I am with you. - Isaiah 41:10",
+            "No weapon formed against you shall prosper. - Isa 54:17"
+        ];
+
+        function setDailyVerse() {
+            const day = new Date().getDate();
+            document.getElementById('verse').innerText = verses[day % verses.length];
+        }
+
+        function newVerse() {
+            const random = Math.floor(Math.random() * verses.length);
+            document.getElementById('verse').innerText = verses[random];
+        }
+
+        function shareVerse() {
+            const txt = document.getElementById('verse').innerText;
+            window.open('whatsapp://send?text=' + encodeURIComponent(txt));
+        }
+
+        setDailyVerse();
+    </script>
+</body>
+</html>
