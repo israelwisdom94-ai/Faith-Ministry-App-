@@ -3,45 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faith Evangelical Ministry - Bible</title>
+    <title>Faith Evangelical Ministry - Bible App</title>
     <style>
-        :root { --bg: #000; --card: #1c1c1e; --accent: #007aff; --text: #fff; --grey: #8e8e93; --gold: #c5a059; }
-        body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        :root { --bg: #000; --card: #1c1c1e; --accent: #ff4d4d; --text: #fff; --grey: #8e8e93; --gold: #c5a059; }
+        body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
         
-        /* Navigation & Screens */
+        /* Navigation System */
         .page { display: none; padding: 20px; min-height: 100vh; padding-bottom: 100px; box-sizing: border-box; }
         .page.active { display: block; }
         
-        /* Reader Overlay */
-        #reader-overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg); z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto;
-        }
-        .reader-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #2c2c2e; margin-bottom: 20px; }
+        /* Bible Reader */
+        #bible-reader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 2000; padding: 20px; box-sizing: border-box; }
+        .reader-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #333; margin-bottom: 20px; }
 
-        /* UI Elements */
+        /* UI Components */
         .top-nav { display: flex; justify-content: space-between; padding: 15px 0; font-weight: 800; font-size: 1.5rem; }
         .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
-        
-        /* Bible Grid */
         .bible-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .book-btn { background: #2c2c2e; padding: 15px 2px; text-align: center; border-radius: 8px; color: #fff; border: none; cursor: pointer; font-size: 0.75rem; }
+        .book-btn { background: #2c2c2e; padding: 15px 2px; text-align: center; border-radius: 8px; color: #fff; border: none; cursor: pointer; font-size: 0.75rem; font-weight: 600; }
         
         /* Bottom Tab Bar */
         .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2c2c2e; z-index: 1000; }
-        .tab { text-align: center; color: var(--grey); font-size: 0.65rem; cursor: pointer; flex: 1; }
+        .tab { text-align: center; color: var(--grey); font-size: 0.7rem; cursor: pointer; flex: 1; text-decoration: none; }
         .tab.active { color: #fff; }
         .tab-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-
-        /* Row Items */
-        .row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #2c2c2e; }
-        .icon-box { width: 40px; height: 40px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
+    <div id="bible-reader">
+        <div class="reader-nav">
+            <button onclick="closeReader()" style="background:none; border:none; color:#007aff; font-size:1.1rem; cursor:pointer;">← Back</button>
+            <h3 id="reader-book-name" style="margin:0;">Genesis</h3>
+            <span style="color:var(--grey); font-weight:bold;">KJV</span>
+        </div>
+        <div style="font-size: 1.1rem; line-height: 1.6;">
+            <p id="reader-status">Loading text...</p>
+            <p>The Ministry is currently updating the full text for this book. Please check back shortly for the complete chapter-by-chapter reading experience.</p>
+        </div>
+    </div>
+
     <div id="home" class="page active">
-        <div class="top-nav">Today</div>
+        <div class="top-nav">Today <span style="font-size: 1rem; color: var(--grey);">⚡ 1</span></div>
         <div class="card" style="text-align: center;">
             <div style="width: 60px; height: 60px; background: white; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--gold);">
                 <img src="https://img.icons8.com/ios-filled/50/c5a059/cross.png" width="30">
@@ -50,63 +53,61 @@
             <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv" style="width: 100%; filter: invert(1); margin-top: 10px;"></audio>
         </div>
         <div class="card">
-            <small style="color: var(--accent);">VERSE OF THE DAY</small>
-            <p id="daily-v" style="font-size: 1.2rem; font-weight: 600;">"Trust in the LORD with all thine heart..." - Prov 3:5</p>
+            <span style="color:var(--grey); font-weight:800; font-size:0.7rem;">VERSE OF THE DAY</span>
+            <p style="font-size:1.2rem; font-weight:700; margin:10px 0;">"I will instruct thee and teach thee in the way which thou shalt go..." - Psalm 32:8</p>
         </div>
     </div>
 
     <div id="bible" class="page">
         <div class="top-nav">Bible</div>
-        <h4 style="color: var(--grey);">Old Testament</h4>
-        <div class="bible-grid" id="ot-grid"></div>
-        <h4 style="color: var(--grey); margin-top: 20px;">New Testament</h4>
-        <div class="bible-grid" id="nt-grid"></div>
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--grey);">BOOKS</h4>
+            <div class="bible-grid" id="bible-books"></div>
+        </div>
     </div>
 
     <div id="plans" class="page">
         <div class="top-nav">Plans</div>
         <div class="card">
-            <div class="row"><div class="icon-box">📖</div><div><strong>Bible in a Year</strong><br><small>365 Days</small></div></div>
-            <div class="row"><div class="icon-box">🔥</div><div><strong>Youth Revival</strong><br><small>7 Days</small></div></div>
-            <div class="row"><div class="icon-box">🛡️</div><div><strong>Faith Over Fear</strong><br><small>14 Days</small></div></div>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div style="width:50px; height:50px; background:var(--gold); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">📖</div>
+                <div><strong>Forgiveness Heals</strong><br><small style="color:var(--grey);">Day 5 of 7</small></div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div style="width:50px; height:50px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">🔥</div>
+                <div><strong>Youth Revival</strong><br><small style="color:var(--grey);">New Plan</small></div>
+            </div>
         </div>
     </div>
 
     <div id="discover" class="page">
         <div class="top-nav">Discover</div>
-        <input type="text" placeholder="Search verses or topics..." style="width:100%; padding:15px; border-radius:10px; border:none; background:var(--card); color:white; box-sizing:border-box;">
-        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
-            <span class="book-btn" style="padding:10px 15px;">Peace</span>
+        <input type="text" placeholder="Search for verses or topics..." style="width:100%; padding:15px; border-radius:10px; border:none; background:var(--card); color:white; box-sizing:border-box;">
+        <h4 style="margin-top:20px; color:var(--grey);">TRENDING</h4>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
             <span class="book-btn" style="padding:10px 15px;">Healing</span>
-            <span class="book-btn" style="padding:10px 15px;">Joy</span>
+            <span class="book-btn" style="padding:10px 15px;">Peace</span>
+            <span class="book-btn" style="padding:10px 15px;">Marriage</span>
         </div>
     </div>
 
     <div id="you" class="page">
         <div class="top-nav">You</div>
         <div class="card" style="text-align:center;">
-            <div style="font-size:3rem;">👤</div>
-            <h3>Faith Ministry Member</h3>
+            <div style="font-size:3rem; margin-bottom:10px;">👤</div>
+            <h3>Ministry Member</h3>
         </div>
         <div class="card">
-            <div class="row"><span>Notifications</span><span style="margin-left:auto;">On</span></div>
-            <div class="row"><span>Ministry Info</span><span style="margin-left:auto;">ℹ️</span></div>
-            <div class="row"><span>Settings</span><span style="margin-left:auto;">⚙️</span></div>
-            <div class="row" style="color:red; border:none;"><span>Log Out</span></div>
+            <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #333;"><span>Prayer Streak</span><span>⚡ 1</span></div>
+            <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #333;"><span>Ministry Settings</span><span>⚙️</span></div>
+            <div style="display:flex; justify-content:space-between; padding:15px 0; color:red;"><span>Sign Out</span></div>
         </div>
-    </div>
-
-    <div id="reader-overlay">
-        <div class="reader-header">
-            <button onclick="closeReader()" style="background:none; border:none; color:var(--accent); font-size:1.1rem;">← Back</button>
-            <h3 id="reader-title">Book</h3>
-            <span style="color:var(--grey);">KJV</span>
-        </div>
-        <div id="reader-content" style="font-size: 1.2rem; line-height: 1.7;"></div>
     </div>
 
     <div class="bottom-bar">
-        <div class="tab active" onclick="nav('home', this)"><span class="tab-icon">🏠</span>Today</div>
+        <div class="tab active" onclick="nav('home', this)"><span class="tab-icon">🏠</span>Home</div>
         <div class="tab" onclick="nav('bible', this)"><span class="tab-icon">📖</span>Bible</div>
         <div class="tab" onclick="nav('plans', this)"><span class="tab-icon">✅</span>Plans</div>
         <div class="tab" onclick="nav('discover', this)"><span class="tab-icon">🔍</span>Discover</div>
@@ -114,40 +115,36 @@
     </div>
 
     <script>
-        // Data for all 66 books
-        const ot = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi"];
-        const nt = ["Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"];
+        // All 66 Books
+        const books = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Cor", "2 Cor", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thess", "2 Thess", "1 Tim", "2 Tim", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"];
 
-        // Fill Bible grids
-        const fillGrid = (gridId, books) => {
-            const grid = document.getElementById(gridId);
-            books.forEach(book => {
-                const btn = document.createElement('button');
-                btn.className = 'book-btn';
-                btn.innerText = book;
-                btn.onclick = () => openReader(book);
-                grid.appendChild(btn);
-            });
-        };
-        fillGrid('ot-grid', ot);
-        fillGrid('nt-grid', nt);
+        const grid = document.getElementById('bible-books');
+        books.forEach(b => {
+            const btn = document.createElement('button');
+            btn.className = 'book-btn';
+            btn.innerText = b;
+            btn.onclick = () => openReader(b);
+            grid.appendChild(btn);
+        });
 
-        function nav(id, el) {
+        function nav(pageId, tab) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
+            tab.classList.add('active');
             window.scrollTo(0,0);
         }
 
         function openReader(book) {
-            document.getElementById('reader-title').innerText = book;
-            document.getElementById('reader-content').innerHTML = "Loading " + book + " text...<br><br>The Ministry is currently updating the full text for this book. Please check back shortly for the complete chapter-by-chapter reading experience.";
-            document.getElementById('reader-overlay').style.display = 'block';
+            document.getElementById('reader-book-name').innerText = book;
+            document.getElementById('reader-status').innerText = "Loading " + book + " text...";
+            document.getElementById('bible-reader').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeReader() {
-            document.getElementById('reader-overlay').style.display = 'none';
+            document.getElementById('bible-reader').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
