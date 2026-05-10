@@ -15,24 +15,31 @@
         :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; scroll-behavior: smooth; }
         
+        /* Fixed Nav exactly like your image */
         nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;}
         nav .brand { color: var(--primary); font-weight: bold; font-size: 1.1rem; text-decoration: none; }
-        nav .nav-links a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 15px; font-size: 0.9rem; }
+        nav .nav-links a { color: #666; font-weight: normal; text-decoration: none; margin-left: 15px; font-size: 0.9rem; }
 
-        .hero { background: var(--dark); color: white; padding: 40px 20px; text-align: center; }
+        /* The Black Hero Section from your screenshot */
+        .hero { background: var(--dark); color: white; padding: 40px 20px 60px; text-align: center; }
         .logo-circle { width: 120px; height: 120px; border-radius: 50%; background: white; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 4px solid var(--gold); }
         .logo-circle img { width: 70px; }
         .hero h1 { font-size: 2rem; margin: 10px 0; }
+        .hero p { opacity: 0.8; font-style: italic; }
 
-        .audio-card { background: white; margin: -25px 20px 20px; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); text-align: center; }
+        /* The Floating Audio Player Card from your screenshot */
+        .audio-card { background: white; margin: -40px 20px 20px; padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); text-align: center; position: relative; z-index: 10; }
         audio { width: 100%; height: 35px; margin-top: 10px; }
 
+        /* The Blue "Word of the Day" Bar from your screenshot */
         .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 30px 20px; margin-bottom: 25px; text-align: center; }
 
+        /* The Prayer Request Card */
         .form-card { background: white; margin: 20px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
-        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 15px 0; box-sizing: border-box; font-family: inherit; }
+        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 15px 0; box-sizing: border-box; font-size: 1rem; }
 
-        .verse-section { padding: 20px; text-align: center; margin: 20px; }
+        /* The Daily Inspiration Section */
+        .verse-section { padding: 30px 20px; text-align: center; margin: 20px; }
         .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem; }
         
         footer { padding: 40px 20px; color: #888; font-size: 0.8rem; text-align: center; }
@@ -41,10 +48,10 @@
 <body>
 
     <nav>
-        <a href="#" class="brand">FAITH EVANGELICAL Ministry</a>
+        <a href="#" class="brand">FAITH EVANGELICAL MINISTRY</a>
         <div class="nav-links">
-            <a href="#">HOME</a>
-            <a href="#prayer">PRAYER</a>
+            <a href="#">Home</a>
+            <a href="#prayer">Prayer</a>
         </div>
     </nav>
 
@@ -55,25 +62,27 @@
     </div>
 
     <div class="audio-card">
-        <small style="color: #888; font-weight: bold; text-transform: uppercase;">Now Playing: Faith Streaming</small>
+        <small style="color: #888; font-weight: bold; text-transform: uppercase;">Now Playing: Daily Scripture</small>
+        <div style="font-weight: bold; margin: 5px 0; font-size: 1.1rem;">Faith FM Streaming</div>
         <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv"></audio>
     </div>
 
     <div class="blue-bar">
-        <h2 style="margin: 0;">Walking in Divine Purpose</h2>
+        <small style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Word of the Day</small>
+        <h2 style="margin: 10px 0;">Walking in Divine Purpose</h2>
     </div>
 
     <div id="prayer" class="form-card">
         <h2 style="margin-top: 0;">Prayer Request</h2>
-        <p style="color: #666;">How can we pray for you today?</p>
+        <p>How can we pray for you today?</p>
         <textarea placeholder="Type your prayer request here..." rows="4"></textarea>
-        <button class="btn" onclick="alert('Prayer request sent to the Ministry!')">Submit Request</button>
+        <button class="btn" onclick="alert('Prayer request sent!')">Submit Request</button>
     </div>
 
     <div class="verse-section">
-        <h2 style="margin-bottom:5px;">Daily Inspiration</h2>
-        <p id="verse" style="font-style: italic; color: #555; font-size: 1.2rem; min-height: 60px;">Loading today's word...</p>
-        <button class="btn" onclick="newVerse()">Get Different Verse</button>
+        <h2 style="font-size: 1.5rem;">Daily Inspiration</h2>
+        <p id="verse" style="font-style: italic; font-size: 1.2rem; min-height: 60px; color: #444; padding: 10px;">"The Lord is my shepherd; I shall not want." - Psalm 23:1</p>
+        <button class="btn" style="background: #e3f2fd; color: #1877f2;" onclick="newVerse()">New Verse</button>
     </div>
 
     <footer>
@@ -88,43 +97,17 @@
             "For I know the plans I have for you. - Jer 29:11",
             "Trust in the Lord with all your heart. - Prov 3:5",
             "Thy word is a lamp unto my feet. - Psalm 119:105",
-            "Be strong and courageous. - Joshua 1:9",
-            "The joy of the Lord is your strength. - Neh 8:10",
             "Fear not, for I am with you. - Isaiah 41:10",
             "No weapon formed against you shall prosper. - Isa 54:17",
-            "The name of the Lord is a strong tower. - Prov 18:10",
-            "Peace I leave with you. - John 14:27",
-            "God is our refuge and strength. - Psalm 46:1",
             "With God all things are possible. - Matt 19:26",
-            "Faith is the substance of things hoped for. - Heb 11:1",
-            "I am with you always. - Matt 28:20",
-            "He restores my soul. - Psalm 23:3",
-            "The truth will set you free. - John 8:32",
-            "Greater is He that is in you. - 1 John 4:4",
-            "My grace is sufficient for you. - 2 Cor 12:9",
-            "Love the Lord your God with all your heart. - Matt 22:37",
-            "In everything give thanks. - 1 Thess 5:18",
-            "Ask and it will be given to you. - Matt 7:7",
-            "He who dwells in the secret place. - Psalm 91:1",
-            "The Lord will fight for you. - Exo 14:14",
-            "Cast all your anxiety on Him. - 1 Pet 5:7",
-            "The Lord is my light and salvation. - Psalm 27:1",
-            "For God so loved the world. - John 3:16",
-            "I am the way, the truth, and the life. - John 14:6",
-            "Everything is possible for one who believes. - Mark 9:23",
-            "Renew their strength like eagles. - Isa 40:31"
+            "The name of the Lord is a strong tower. - Prov 18:10",
+            "For God so loved the world. - John 3:16"
         ];
 
-        // LOGIC: Change verse every 24 hours based on the date
+        // This changes the verse based on the date
         function setDailyVerse() {
-            const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = now - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
-            
-            // This picks a verse based on the day of the year
-            const index = dayOfYear % verses.length;
+            const day = new Date().getDate();
+            const index = day % verses.length;
             document.getElementById('verse').innerText = verses[index];
         }
 
@@ -133,12 +116,7 @@
             document.getElementById('verse').innerText = verses[random];
         }
 
-        // Run the daily verse logic when the app opens
         setDailyVerse();
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
     </script>
 </body>
 </html>
