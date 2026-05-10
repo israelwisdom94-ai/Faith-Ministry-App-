@@ -12,154 +12,136 @@
     <link rel="icon" href="https://img.icons8.com/ios-filled/150/c5a059/cross.png">
 
     <style>
-        :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; --light-blue: #e3f2fd; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
+        :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; }
         
-        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        nav .brand { color: var(--primary); font-weight: bold; font-size: 1.1rem; line-height: 1.2; }
+        nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;}
+        nav .brand { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
 
         .hero { background: var(--dark); color: white; padding: 40px 20px; text-align: center; }
-        .profile-container { width: 120px; height: 120px; margin: 0 auto 15px; }
-        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid white; background: white; padding: 10px; box-sizing: border-box; }
-        .hero h1 { font-size: 1.8rem; margin: 10px 0; }
+        .logo-circle { width: 120px; height: 120px; border-radius: 50%; background: white; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 4px solid var(--gold); }
+        .logo-circle img { width: 70px; }
+        .hero h1 { font-size: 2rem; margin: 10px 0; }
 
-        /* Audio Player Card */
-        .audio-card { background: white; margin: -20px 20px 20px; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        /* RADIO SECTION */
+        .audio-card { background: white; margin: -25px 20px 20px; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); text-align: center; }
+        .live-dot { height: 8px; width: 8px; background-color: #ff4b2b; border-radius: 50%; display: inline-block; margin-right: 5px; animation: pulse 1.5s infinite; }
         audio { width: 100%; height: 35px; margin-top: 10px; }
 
-        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 20px; margin-bottom: 25px; text-align: center; }
+        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 30px 20px; margin-bottom: 25px; text-align: center; }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 30px; text-align: center; }
-        .stat-item h3 { color: var(--primary); margin: 0; font-size: 1.2rem; }
-        .stat-item p { font-size: 0.6rem; color: #666; text-transform: uppercase; font-weight: bold; }
+        .section-title { padding: 0 20px; margin-bottom: 15px; font-size: 1.3rem; border-left: 4px solid var(--gold); margin-left: 20px; text-align: left; }
 
-        .section-title { padding: 0 20px; margin-bottom: 15px; font-size: 1.3rem; border-left: 4px solid var(--gold); margin-left: 20px; }
-
-        .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; margin-bottom: 30px; }
-        .focus-card { background: var(--light-blue); padding: 15px; border-radius: 12px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
-
-        .devotional-card { background: white; margin: 20px; padding: 25px; border-radius: 15px; border-left: 5px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-
-        /* Prayer Wall Section */
         .prayer-wall { background: white; margin: 20px; padding: 20px; border-radius: 15px; }
-        .prayer-item { padding: 15px 0; border-bottom: 1px solid #eee; text-align: left; }
-        .prayer-btn { background: #f0f2f5; border: none; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; color: var(--primary); margin-top: 5px; }
+        .prayer-item { padding: 12px 0; border-bottom: 1px solid #eee; text-align: left; }
+        .prayer-btn { background: #f0f2f5; border: none; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); cursor: pointer; margin-top: 8px; font-weight: bold;}
 
-        .btn-row { display: flex; gap: 10px; padding: 0 20px; margin-top: 20px; }
-        .btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; color: white; cursor: pointer; font-size: 0.9rem; }
-        .btn-blue { background: var(--primary); }
-        .btn-green { background: #4caf50; }
+        .testimony-card { background: #fffde7; margin: 20px; padding: 20px; border-radius: 15px; border: 1px dashed var(--gold); text-align: center; }
 
-        .form-card { background: #f0f2f5; margin: 20px; padding: 25px; border-radius: 15px; text-align: center; }
-        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 15px 0; box-sizing: border-box; }
+        .verse-section { padding: 20px; text-align: center; margin: 20px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; font-size: 1rem; }
+        .btn-green { background: #25D366; }
         
-        footer { padding: 30px 20px; color: #888; font-size: 0.75rem; text-align: center; border-top: 1px solid #eee; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        footer { padding: 40px 20px; color: #888; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="brand">FAITH EVANGELICAL<br>MINISTRY</div>
-        <div style="color:var(--primary); font-weight:bold;">HOME</div>
-    </nav>
+    <nav><div class="brand">FAITH EVANGELICAL MINISTRY</div><div style="color:var(--primary); font-weight:bold;">HOME</div></nav>
 
     <div class="hero">
-        <div class="profile-container">
-            <img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" class="profile-pic" alt="Logo">
-        </div>
+        <div class="logo-circle"><img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" alt="Cross"></div>
         <h1>Promise Miracle</h1>
         <p>"Preach the Word - Reach the World"</p>
     </div>
 
     <div class="audio-card">
-        <div style="font-size: 0.7rem; font-weight: bold; color: #888; text-transform: uppercase;">Now Playing: Daily Scripture</div>
+        <div style="font-size: 0.75rem; font-weight: bold; color: #888;"><span class="live-dot"></span> LIVE RADIO STREAMING</div>
         <div style="font-weight: bold; margin: 5px 0;">Faith FM Streaming</div>
         <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv"></audio>
     </div>
 
     <div class="blue-bar">
-        <small style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Word of the Day</small>
-        <h2 id="daily-title">Walking in Divine Purpose</h2>
+        <h2 style="margin: 0;">Walking in Divine Purpose</h2>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-item"><h3>50+</h3><p>Partners</p></div>
-        <div class="stat-item"><h3>Daily</h3><p>Insight</p></div>
-        <div class="stat-item"><h3>24/7</h3><p>Prayer</p></div>
-    </div>
-
-    <h2 class="section-title">Prayer Focus</h2>
-    <div class="focus-grid">
-        <div class="focus-card">🙏 Global Missions</div>
-        <div class="focus-card">🔥 Youth Revival</div>
-        <div class="focus-card">🏥 Healing & Grace</div>
-        <div class="focus-card">📖 Word Depth</div>
+    <h2 class="section-title">Testimonies</h2>
+    <div class="testimony-card">
+        <p id="testimony" style="font-style: italic;">"I prayed for a job for 6 months, and God finally opened a door this week! Hallelujah!"</p>
+        <small id="testimony-author">- Sister Grace</small>
     </div>
 
     <h2 class="section-title">Community Prayer Wall</h2>
     <div class="prayer-wall">
         <div class="prayer-item">
-            <div style="font-size: 0.9rem;">"Praying for the sick in our community."</div>
-            <button class="prayer-btn" onclick="this.innerHTML='❤️ 12 People Prayed'">🙏 I am praying</button>
-        </div>
-        <div class="prayer-item" style="border:none;">
-            <div style="font-size: 0.9rem;">"Financial breakthrough for a family."</div>
-            <button class="prayer-btn" onclick="this.innerHTML='❤️ 8 People Prayed'">🙏 I am praying</button>
+            <div>"Praying for peace in every home today."</div>
+            <button class="prayer-btn" onclick="this.innerText='❤️ 24 People Prayed'">🙏 I am praying</button>
         </div>
     </div>
 
-    <div class="devotional-card">
-        <span style="background:var(--light-blue); color:var(--primary); padding:4px 10px; border-radius:15px; font-size:0.7rem; font-weight:bold;">TODAY'S DEVOTIONAL</span>
-        <h2 style="margin: 15px 0 10px;">Walking by Faith</h2>
-        <p>God is leading you even when you cannot see the finish line. Trust His heart today.</p>
+    <div class="verse-section">
+        <h2>Daily Inspiration</h2>
+        <p id="verse" style="font-style: italic; min-height: 60px; font-size: 1.2rem;">"The Lord is my shepherd; I shall not want." - Psalm 23:1</p>
+        <button class="btn" onclick="newVerse()">Get New Verse</button>
+        <button class="btn btn-green" onclick="shareApp()">Invite a Friend (WhatsApp)</button>
     </div>
 
-    <div style="padding: 0 20px; text-align:center;">
-        <h2 style="margin-bottom:5px;">Daily Inspiration</h2>
-        <p id="verse" style="font-style: italic; color: #555; min-height:60px; font-size: 1.1rem;">Loading today's word...</p>
-        <div class="btn-row">
-            <button class="btn btn-blue" onclick="newVerse()">New Verse</button>
-            <button class="btn btn-green">Share to WhatsApp</button>
-        </div>
-    </div>
-
-    <div class="form-card">
-        <h2>Submit Prayer Request</h2>
-        <textarea placeholder="How can we pray for you?" rows="3"></textarea>
-        <button class="btn btn-blue" style="width: 100%;">Send Request</button>
-    </div>
-
-    <footer>
-        © 2026 Promise Miracle | Faith Evangelical Ministry<br>
-        Built for the Glory of God
-    </footer>
+    <footer>© 2026 Promise Miracle | Faith Evangelical Ministry</footer>
 
     <script>
         const verses = [
             "I can do all things through Christ who strengthens me. - Phil 4:13",
             "The Lord is my shepherd; I shall not want. - Psalm 23:1",
             "For I know the plans I have for you. - Jer 29:11",
+            "Faith is the substance of things hoped for. - Heb 11:1",
             "Trust in the Lord with all your heart. - Prov 3:5",
-            "Thy word is a lamp unto my feet. - Psalm 119:105",
             "Be strong and courageous. - Joshua 1:9",
             "The joy of the Lord is your strength. - Neh 8:10",
             "Fear not, for I am with you. - Isaiah 41:10",
-            "No weapon formed against you shall prosper. - Isa 54:17"
+            "No weapon formed against you shall prosper. - Isa 54:17",
+            "With God all things are possible. - Matt 19:26",
+            "The name of the Lord is a strong tower. - Prov 18:10",
+            "Thy word is a lamp unto my feet. - Psalm 119:105",
+            "Greater is He that is in you. - 1 John 4:4",
+            "Ask and it will be given to you. - Matt 7:7",
+            "He restores my soul. - Psalm 23:3",
+            "God is our refuge and strength. - Psalm 46:1",
+            "The Lord is faithful to all His promises. - Psalm 145:13",
+            "Love the Lord your God with all your heart. - Matt 22:37",
+            "In everything give thanks. - 1 Thess 5:18",
+            "The truth will set you free. - John 8:32",
+            "I am with you always. - Matt 28:20",
+            "My grace is sufficient for you. - 2 Cor 12:9",
+            "Peace I leave with you. - John 14:27",
+            "I am the way, the truth, and the life. - John 14:6",
+            "The Lord will fight for you. - Exo 14:14",
+            "Everything is possible for one who believes. - Mark 9:23",
+            "Cast all your anxiety on Him. - 1 Pet 5:7",
+            "Renew their strength. - Isa 40:31",
+            "The Lord is my light and salvation. - Psalm 27:1",
+            "For God so loved the world. - John 3:16"
         ];
 
-        // Automatic Daily Verse
-        function setDailyVerse() {
-            const today = new Date().getDate();
-            const verseIndex = today % verses.length;
-            document.getElementById('verse').innerText = verses[verseIndex];
-        }
+        const testimonies = [
+            { text: "\"I prayed for a job for 6 months, and God finally opened a door this week! Hallelujah!\"", author: "- Sister Grace" },
+            { text: "\"God healed my mother from a chronic illness! Praise be to God!\"", author: "- Brother John" },
+            { text: "\"I received a financial breakthrough after the prayer meeting!\"", author: "- Sister Mary" },
+            { text: "\"My family has been restored by the power of the Word.\"", author: "- Deacon Peter" }
+        ];
 
         function newVerse() {
-            const random = Math.floor(Math.random() * verses.length);
-            document.getElementById('verse').innerText = verses[random];
+            const v = Math.floor(Math.random() * verses.length);
+            document.getElementById('verse').innerText = verses[v];
+            
+            const t = Math.floor(Math.random() * testimonies.length);
+            document.getElementById('testimony').innerText = testimonies[t].text;
+            document.getElementById('testimony-author').innerText = testimonies[t].author;
         }
 
-        setDailyVerse();
+        function shareApp() {
+            window.open(`https://wa.me/?text=Join me on the Faith Ministry App for daily prayers and inspiration: ${window.location.href}`);
+        }
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
