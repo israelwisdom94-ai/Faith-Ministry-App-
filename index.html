@@ -12,67 +12,83 @@
     <link rel="icon" href="https://img.icons8.com/ios-filled/150/c5a059/cross.png">
 
     <style>
-        :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; }
+        :root { --primary: #1877f2; --dark: #0a0a0a; --gold: #c5a059; --light-blue: #e3f2fd; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
         
         nav { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        nav .brand { color: var(--primary); font-weight: bold; font-size: 1.2rem; line-height: 1.2; }
-        nav .links { text-align: right; color: #666; font-size: 0.9rem; }
+        nav .brand { color: var(--primary); font-weight: bold; font-size: 1.1rem; line-height: 1.2; }
 
-        .hero { background: var(--dark); color: white; padding: 50px 20px; text-align: center; }
-        .profile-container { width: 150px; height: 150px; margin: 0 auto 20px; }
-        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 4px solid white; background: white; padding: 10px; box-sizing: border-box; }
-        .hero h1 { font-size: 2.2rem; margin: 10px 0; }
-        .hero p { font-style: italic; color: #aaa; }
+        .hero { background: var(--dark); color: white; padding: 40px 20px; text-align: center; }
+        .profile-container { width: 120px; height: 120px; margin: 0 auto 15px; }
+        .profile-pic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid white; background: white; padding: 10px; box-sizing: border-box; }
+        .hero h1 { font-size: 1.8rem; margin: 10px 0; }
 
-        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 25px; margin-bottom: 30px; text-align: center; }
-        .blue-bar h2 { margin: 5px 0 0; font-size: 1.5rem; }
+        /* Audio Player Card */
+        .audio-card { background: white; margin: -20px 20px 20px; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        audio { width: 100%; height: 35px; margin-top: 10px; }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 40px; text-align: center; }
-        .stat-item h3 { color: var(--primary); margin: 0; font-size: 1.4rem; }
-        .stat-item p { font-size: 0.65rem; color: #666; text-transform: uppercase; margin: 5px 0; font-weight: bold; }
+        .blue-bar { background: linear-gradient(to right, #0d47a1, #1976d2); color: white; padding: 20px; margin-bottom: 25px; text-align: center; }
 
-        .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; margin-bottom: 40px; }
-        .focus-card { background: #e3f2fd; padding: 20px; border-radius: 12px; font-weight: bold; color: #455a64; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 30px; text-align: center; }
+        .stat-item h3 { color: var(--primary); margin: 0; font-size: 1.2rem; }
+        .stat-item p { font-size: 0.6rem; color: #666; text-transform: uppercase; font-weight: bold; }
 
-        .devotional-card { background: white; margin: 20px; padding: 30px; border-radius: 15px; border-left: 5px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        
+        .section-title { padding: 0 20px; margin-bottom: 15px; font-size: 1.3rem; border-left: 4px solid var(--gold); margin-left: 20px; }
+
+        .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; margin-bottom: 30px; }
+        .focus-card { background: var(--light-blue); padding: 15px; border-radius: 12px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+
+        .devotional-card { background: white; margin: 20px; padding: 25px; border-radius: 15px; border-left: 5px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        /* Prayer Wall Section */
+        .prayer-wall { background: white; margin: 20px; padding: 20px; border-radius: 15px; }
+        .prayer-item { padding: 15px 0; border-bottom: 1px solid #eee; text-align: left; }
+        .prayer-btn { background: #f0f2f5; border: none; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; cursor: pointer; color: var(--primary); margin-top: 5px; }
+
         .btn-row { display: flex; gap: 10px; padding: 0 20px; margin-top: 20px; }
-        .btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; color: white; cursor: pointer; }
+        .btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; color: white; cursor: pointer; font-size: 0.9rem; }
         .btn-blue { background: var(--primary); }
         .btn-green { background: #4caf50; }
 
-        .form-card { background: white; margin: 20px; padding: 30px; border-radius: 15px; text-align: center; }
-        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 20px 0; box-sizing: border-box; }
+        .form-card { background: #f0f2f5; margin: 20px; padding: 25px; border-radius: 15px; text-align: center; }
+        textarea { width: 100%; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 15px 0; box-sizing: border-box; }
         
-        footer { padding: 40px 20px; color: #888; font-size: 0.8rem; text-align: center; }
+        footer { padding: 30px 20px; color: #888; font-size: 0.75rem; text-align: center; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="brand">Faith Evangelical<br>Ministry</div>
-        <div class="links">Home<br>Prayer</div>
+        <div class="brand">FAITH EVANGELICAL<br>MINISTRY</div>
+        <div style="color:var(--primary); font-weight:bold;">HOME</div>
     </nav>
 
     <div class="hero">
         <div class="profile-container">
-            <img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" class="profile-pic" alt="Ministry Logo">
+            <img src="https://img.icons8.com/ios-filled/100/c5a059/cross.png" class="profile-pic" alt="Logo">
         </div>
         <h1>Promise Miracle</h1>
         <p>"Preach the Word - Reach the World"</p>
     </div>
 
+    <div class="audio-card">
+        <div style="font-size: 0.7rem; font-weight: bold; color: #888; text-transform: uppercase;">Now Playing: Daily Scripture</div>
+        <div style="font-weight: bold; margin: 5px 0;">Faith FM Streaming</div>
+        <audio controls src="https://stream.zeno.fm/5v6p69v37ceuv"></audio>
+    </div>
+
     <div class="blue-bar">
-        <h2>Walking in Divine Purpose</h2>
+        <small style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">Word of the Day</small>
+        <h2 id="daily-title">Walking in Divine Purpose</h2>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-item"><h3>50+</h3><p>Prayer Partners</p></div>
-        <div class="stat-item"><h3>Daily</h3><p>Devotionals</p></div>
-        <div class="stat-item"><h3>24/7</h3><p>Intercession</p></div>
+        <div class="stat-item"><h3>50+</h3><p>Partners</p></div>
+        <div class="stat-item"><h3>Daily</h3><p>Insight</p></div>
+        <div class="stat-item"><h3>24/7</h3><p>Prayer</p></div>
     </div>
 
+    <h2 class="section-title">Prayer Focus</h2>
     <div class="focus-grid">
         <div class="focus-card">🙏 Global Missions</div>
         <div class="focus-card">🔥 Youth Revival</div>
@@ -80,14 +96,27 @@
         <div class="focus-card">📖 Word Depth</div>
     </div>
 
+    <h2 class="section-title">Community Prayer Wall</h2>
+    <div class="prayer-wall">
+        <div class="prayer-item">
+            <div style="font-size: 0.9rem;">"Praying for the sick in our community."</div>
+            <button class="prayer-btn" onclick="this.innerHTML='❤️ 12 People Prayed'">🙏 I am praying</button>
+        </div>
+        <div class="prayer-item" style="border:none;">
+            <div style="font-size: 0.9rem;">"Financial breakthrough for a family."</div>
+            <button class="prayer-btn" onclick="this.innerHTML='❤️ 8 People Prayed'">🙏 I am praying</button>
+        </div>
+    </div>
+
     <div class="devotional-card">
-        <h2 style="margin: 0 0 10px;">Walking by Faith, Not by Sight</h2>
-        <p>God asks us to trust the Guide, even when the path is foggy.</p>
+        <span style="background:var(--light-blue); color:var(--primary); padding:4px 10px; border-radius:15px; font-size:0.7rem; font-weight:bold;">TODAY'S DEVOTIONAL</span>
+        <h2 style="margin: 15px 0 10px;">Walking by Faith</h2>
+        <p>God is leading you even when you cannot see the finish line. Trust His heart today.</p>
     </div>
 
     <div style="padding: 0 20px; text-align:center;">
-        <h2>Daily Inspiration</h2>
-        <p id="verse" style="font-style: italic; color: #555; min-height:60px;">"For I know the plans I have for you," declares the Lord. - Jer 29:11</p>
+        <h2 style="margin-bottom:5px;">Daily Inspiration</h2>
+        <p id="verse" style="font-style: italic; color: #555; min-height:60px; font-size: 1.1rem;">Loading today's word...</p>
         <div class="btn-row">
             <button class="btn btn-blue" onclick="newVerse()">New Verse</button>
             <button class="btn btn-green">Share to WhatsApp</button>
@@ -95,53 +124,42 @@
     </div>
 
     <div class="form-card">
-        <h2>Prayer Request</h2>
-        <textarea placeholder="Type your prayer request here..." rows="4"></textarea>
-        <button class="btn btn-blue" style="width: 100%;">Submit Request</button>
+        <h2>Submit Prayer Request</h2>
+        <textarea placeholder="How can we pray for you?" rows="3"></textarea>
+        <button class="btn btn-blue" style="width: 100%;">Send Request</button>
     </div>
 
     <footer>
-        © 2026 Promise Miracle | Faith Evangelical Ministry
+        © 2026 Promise Miracle | Faith Evangelical Ministry<br>
+        Built for the Glory of God
     </footer>
 
     <script>
         const verses = [
             "I can do all things through Christ who strengthens me. - Phil 4:13",
             "The Lord is my shepherd; I shall not want. - Psalm 23:1",
-            "For I know the plans I have for you, declares the Lord. - Jer 29:11",
-            "Faith is the substance of things hoped for. - Heb 11:1",
-            "Be strong and courageous. Do not be afraid. - Joshua 1:9",
+            "For I know the plans I have for you. - Jer 29:11",
             "Trust in the Lord with all your heart. - Prov 3:5",
-            "With God all things are possible. - Matt 19:26",
-            "The Lord is my light and my salvation. - Psalm 27:1",
-            "For God so loved the world that He gave His only Son. - John 3:16",
-            "The joy of the Lord is your strength. - Neh 8:10",
-            "Cast all your anxiety on Him because He cares for you. - 1 Pet 5:7",
-            "But they that wait upon the Lord shall renew their strength. - Isa 40:31",
-            "The name of the Lord is a strong tower. - Prov 18:10",
-            "Peace I leave with you; my peace I give you. - John 14:27",
-            "I am the way, the truth, and the life. - John 14:6",
-            "The Lord will fight for you; you need only to be still. - Exo 14:14",
             "Thy word is a lamp unto my feet. - Psalm 119:105",
-            "Everything is possible for one who believes. - Mark 9:23",
-            "Greater is He that is in you. - 1 John 4:4",
-            "Ask and it will be given to you. - Matt 7:7",
-            "He restores my soul. - Psalm 23:3",
-            "God is our refuge and strength. - Psalm 46:1",
-            "The Lord is faithful to all His promises. - Psalm 145:13",
-            "Love the Lord your God with all your heart. - Matt 22:37",
-            "In everything give thanks. - 1 Thess 5:18",
-            "The truth will set you free. - John 8:32",
-            "I am with you always, to the very end of the age. - Matt 28:20",
-            "No weapon formed against you shall prosper. - Isa 54:17",
-            "My grace is sufficient for you. - 2 Cor 12:9",
-            "Let everything that has breath praise the Lord. - Psalm 150:6"
+            "Be strong and courageous. - Joshua 1:9",
+            "The joy of the Lord is your strength. - Neh 8:10",
+            "Fear not, for I am with you. - Isaiah 41:10",
+            "No weapon formed against you shall prosper. - Isa 54:17"
         ];
+
+        // Automatic Daily Verse
+        function setDailyVerse() {
+            const today = new Date().getDate();
+            const verseIndex = today % verses.length;
+            document.getElementById('verse').innerText = verses[verseIndex];
+        }
 
         function newVerse() {
             const random = Math.floor(Math.random() * verses.length);
             document.getElementById('verse').innerText = verses[random];
         }
+
+        setDailyVerse();
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
